@@ -1,7 +1,7 @@
 import React                              from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 
-const SignupScreen = ({navigation}) => {
+const TrackListScreen = ({navigation}) => {
   return (
     <View>
       <Text style={styles.text}>Track List screen</Text>
@@ -17,4 +17,4 @@ const styles = new StyleSheet.create({
   },
 });
 
-export default SignupScreen;
+export default TrackListScreen;

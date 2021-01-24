@@ -13,6 +13,8 @@ import { createStackNavigator }                      from 'react-navigation-stac
 import { createBottomTabNavigator }                  from 'react-navigation-tabs';
 import TrackDetailScreen                             from './screens/TrackDetailScreen';
 
+import { Provider as AuthProvider, Context as AuthContext } from './context/AuthContext'
+
 const switchNavigator = createSwitchNavigator({
   loginFlow: createStackNavigator({
     SignUp: SignupScreen,
@@ -30,13 +32,12 @@ const switchNavigator = createSwitchNavigator({
 });
 
 
-export default createAppContainer(switchNavigator);
+const App = createAppContainer(switchNavigator);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default () => {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  )
+}

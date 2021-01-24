@@ -5,7 +5,6 @@ const AccountScreen = () => {
   return (
     <View>
       <Text styles={styles.text}>Account screen</Text>
-
     </View>
   );
 };
