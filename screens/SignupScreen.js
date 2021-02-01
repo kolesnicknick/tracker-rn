@@ -7,9 +7,12 @@ const SignupScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+
+  console.log(state);
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Sign up screen</Text>
+      {state.errorMessage.length > 0 && (<Text style={[styles.text, { color: 'red' }]}>{state.errorMessage}</Text>)}
       <TextInput
         style={styles.input}
         autoCapitalize='none'
