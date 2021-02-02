@@ -1,42 +1,18 @@
 import React, { useState, useContext }               from 'react';
 import { Text, Button, View, StyleSheet, TextInput } from 'react-native';
 import { Context as AuthContext }                    from '../context/AuthContext';
+import { AuthForm }                                  from '../components/AuthForm';
+import { NavigationEvents }                          from 'react-navigation';
+
 
 const SignupScreen = ({navigation}) => {
-  const {state, signUp} = useContext(AuthContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {state, signUp, clearErrorMessage} = useContext(AuthContext);
 
-
-  console.log(state);
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Sign up screen</Text>
-      {state.errorMessage.length > 0 && (<Text style={[styles.text, { color: 'red' }]}>{state.errorMessage}</Text>)}
-      <TextInput
-        style={styles.input}
-        autoCapitalize='none'
-        autoCorrect={false}
-        placeholder={'Email'}
-        value={email}
-        onChangeText={setEmail}
-      />
-
-      <TextInput
-        secureTextEntry={true}
-        style={styles.input}
-        autoCapitalize='none'
-        autoCorrect={false}
-        placeholder={'Password'}
-        value={password}
-        onChangeText={setPassword}
-      />
-
-      <Button title='SignUp' onPress={() => {
-        signUp({email, password});
-      }}/>
-
-      <Button title='Go To signin' onPress={() => navigation.navigate('SignIn')}/>
+      <NavigationEvents onWillFocus={clearErrorMessage} />
+      <AuthForm headerText={'Sign Up'} errorMessage={state.errorMessage} submitButtonText={'Sign Up'} onSubmit={signUp}/>
+      <Button title='Have an account? Sign In.' onPress={() => navigation.navigate('SignIn')}/>
     </View>
   );
 };
