@@ -15,12 +15,13 @@ import TrackDetailScreen                             from './screens/TrackDetail
 import { setNavigator }                               from './navigationRef';
 
 import { Provider as AuthProvider, Context as AuthContext } from './context/AuthContext'
+import ResolveScreen                                        from './screens/ResolveScreen';
 
 const switchNavigator = createSwitchNavigator({
+  Resolve: ResolveScreen,
   loginFlow: createStackNavigator({
     SignUp: SignupScreen,
     SignIn: SigninScreen,
-
   }),
   mainFlow: createBottomTabNavigator({
     trackListFlow: createStackNavigator({

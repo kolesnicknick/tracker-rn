@@ -11,8 +11,11 @@ const authReducer = (state, action) => {
       return {...state, errorMessage: '', token: action.payload};
     case 'login':
       return {...state, errorMessage: '', token: action.payload};
-      case 'clear_error_message':
+    case 'clear_error_message':
       return {...state, errorMessage: ''};
+    case 'logOut':
+      return {...state, token: null};
+
     default:
       return state;
   }
@@ -30,10 +33,22 @@ const signUp = (dispatch) => async ({email, password}) => {
   }
 };
 
+const tryLocalSignIn = (dispatch) => async () => {
+  const token = await AsyncStorage.getItem('token');
+  console.log('token', token);
+  if(token){
+    console.log('NAVIGATE TO TRACK LIST');
+    dispatch({type: 'login', payload: token});
+    navigate('TrackList');
+  }
+  else {
+    console.log('NAVIGATE TO SIGN IN');
+    navigate('SignIn');
+  }
+}
 
 const signIn = (dispatch) => async ({email, password}) => {
   try {
-    console.log('IN SIGN IN ', email, password);
     const response = await trackerApi.post('/signin', {email, password});
     await AsyncStorage.setItem('token', response.data.token);
 
@@ -48,15 +63,20 @@ const clearErrorMessage = dispatch => () => {
   dispatch({type: 'clear_error_message'})
 };
 
-const logOut = (dispatch) => {
-  return ({}) => {
-    // make api request
-
-    // modify the state
-  };
+const logOut = (dispatch) => async () => {
+  try {
+    await AsyncStorage.removeItem('token');
+    dispatch({type: 'logOut'})
+    navigate('SignIn')
+  }
+  catch (e){
+    console.log(e)
+  }
 };
+
+
 export const {Provider, Context} = createDataContext(
   authReducer,
-  {signIn, signUp, logOut, clearErrorMessage},
+  {signIn, signUp, logOut, clearErrorMessage, tryLocalSignIn},
   {token: null, errorMessage: ''}
 );

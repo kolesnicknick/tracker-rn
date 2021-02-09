@@ -19,7 +19,7 @@ export const AuthForm = ({ headerText, errorMessage, onSubmit, submitButtonText 
       />
 
       <TextInput
-        secureTextEntry={true}
+        secureTextEntry={false}
         style={styles.input}
         autoCapitalize='none'
         autoCorrect={false}
